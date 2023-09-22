@@ -1,4 +1,8 @@
-﻿namespace McMotdParser
+﻿using System.Runtime.InteropServices;
+using System.Text.Json;
+using McMotdParser.Deserializer;
+
+namespace McMotdParser
 {
     public class Motd
     {
@@ -20,6 +24,12 @@
         private string DefiniteForm()
         {
             return string.Empty;
+        }
+
+        private MotdContent aa(){
+            var option = new JsonSerializerOptions();
+            option.Converters.Add(new JsonDeserializer<MotdContent>());
+            return JsonSerializer.Deserialize<MotdContent>(this.RawMotd);
         }
     }
 }

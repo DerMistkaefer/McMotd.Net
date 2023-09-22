@@ -13,12 +13,13 @@ namespace McMotdParser.Deserializer
 
         public override Dictionary<string, T>? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
+
             if(reader.TokenType is not JsonTokenType.StartObject)
             {
                 // 이상한 문제 
                 reader.GetString();
-                string a = "§";
             }
+            return null;
         }
 
         public override bool CanConvert(Type typeToConvert)

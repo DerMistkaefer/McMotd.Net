@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "McMotdParser.MAUI", "McMotd
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "McMotdParser.Razor", "McMotdParser.Razor\McMotdParser.Razor.csproj", "{BA9381E4-B88B-4D68-B13D-18AB0A9C9C89}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "McMotdParser.Test", "McMotdParser.Test\McMotdParser.Test.csproj", "{2C804E39-7098-47E4-8F8F-33DDB91E9648}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{BA9381E4-B88B-4D68-B13D-18AB0A9C9C89}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA9381E4-B88B-4D68-B13D-18AB0A9C9C89}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BA9381E4-B88B-4D68-B13D-18AB0A9C9C89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C804E39-7098-47E4-8F8F-33DDB91E9648}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C804E39-7098-47E4-8F8F-33DDB91E9648}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C804E39-7098-47E4-8F8F-33DDB91E9648}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C804E39-7098-47E4-8F8F-33DDB91E9648}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
