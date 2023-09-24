@@ -10,20 +10,32 @@ namespace McMotdParser.Deserializer
     {
         private readonly string SIGN = "§";
         private string raw_content;
-        private StringBuilder sb;
         public SectionSignDeserializer(string raw_content) {
             this.raw_content = raw_content;
 
         }
-        public void a(){
+        //TODO : 앞뒤 따음표 없애기
+        public List<MotdContent> deserialize(){
+            List<MotdContent> MotdContents = new List<MotdContent> ();
             var splited_contents = this.raw_content.Split(SIGN);
-            foreach(var content in splited_contents){
-                //Todo: Find run Sexy
-                if(content.StartsWith(SIGN)){
-                    var new_content = content.Substring(2);
-                    
+            for(int i = 0; i< splited_contents.Length; i++) {
+                if(i == 0)
+                {
+                    if (splited_contents[i] == string.Empty) continue;
                 }
+                MotdContents.Add(new MotdContent()
+                {
+                    content = splited_contents[i]
+                });
+
+
+
             }
+            return MotdContents;
+        }
+        private string FirstSignParse(string content)
+        {
+            return "";
         }
     }
 }

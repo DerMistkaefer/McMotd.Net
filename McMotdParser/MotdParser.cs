@@ -1,15 +1,20 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using McMotdParser.Deserializer;
 
 namespace McMotdParser
 {
-    public class Motd
+    public class MotdParser
     {
         private string RawMotd;
-        public Motd(string raw_motd)
+       
+
+        public MotdParser(string raw_motd)
         {
-            this.RawMotd = raw_motd;
+            this.RawMotd = DefiniteForm(raw_motd);
         }
 
         public void ToXaml()
@@ -21,15 +26,29 @@ namespace McMotdParser
             return "";
         }
 
-        private string DefiniteForm()
+        private string DefiniteForm(string raw_motd)
         {
-            return string.Empty;
+            StringBuilder sb = new StringBuilder();
+            sb.Append("{ \"Contents\" : ");
+            if (!raw_motd.StartsWith('{')) sb.Append('\"');
+            sb.Append(raw_motd);
+            if (!raw_motd.StartsWith('{')) sb.Append('\"');
+            sb.Append('}');
+            
+            return sb.ToString();
         }
 
-        private MotdContent aa(){
+        public MotdContents testFunc(){
             var option = new JsonSerializerOptions();
-            option.Converters.Add(new JsonDeserializer<MotdContent>());
-            return JsonSerializer.Deserialize<MotdContent>(this.RawMotd);
+            option.Converters.Add(new MotdDeserializer());
+            return JsonSerializer.Deserialize<MotdContents>(this.RawMotd);
         }
     }
+
+    public class MotdContents
+    {
+        [JsonConverter(typeof(MotdDeserializer))]
+        public List<MotdContent > Contents { get; set; }
+    }
+    
 }
