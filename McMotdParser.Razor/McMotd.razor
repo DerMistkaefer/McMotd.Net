@@ -1,0 +1,14 @@
+﻿<div class="mcmotd-container">
+    @foreach(var motd in Motds.Contents)
+    {
+    }
+</div>
+
+
+
+@code{
+    [Parameter]
+    public MotdContents Motds { get; set; }
+
+
+} 
