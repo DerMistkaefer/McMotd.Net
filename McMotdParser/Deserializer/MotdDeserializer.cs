@@ -1,4 +1,5 @@
-﻿using McMotdParser.Enum;
+﻿using McMotdParser.Data;
+using McMotdParser.Enum;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,20 +18,14 @@ namespace McMotdParser.Deserializer
         {
             if (reader.TokenType != JsonTokenType.StartObject)
             {
-#if DEBUG
                 Debug.WriteLine("Not Json Object");
-#endif
                 using (var jsonDoc = JsonDocument.ParseValue(ref reader))
                 {
-#if DEBUG
                     Debug.WriteLine($"string contents : {jsonDoc.RootElement.GetRawText()}");
-#endif
                     return new SectionSignDeserializer(jsonDoc.RootElement.GetRawText()).deserialize();
                 }
             }
-#if DEBUG
             Debug.WriteLine("Object Found");
-#endif
             reader.Read();
             string? propertyName = reader.GetString(); //this indicate first key
 
@@ -43,7 +38,6 @@ namespace McMotdParser.Deserializer
 
                 Debug.WriteLine($"KEY PropertyName : {propertyName}");
 
-                //Complex타입에서 마지막 루프에 걸리는거 방지
                 //Execute simple json motd deserialize
                 if (propertyName == "text")
                 {
@@ -52,6 +46,7 @@ namespace McMotdParser.Deserializer
                     if (!string.IsNullOrEmpty(content)) //temponary
                     {
                         motd.content = content;
+                        motd.TextFormatting.Add(TextFormatEnum.Noraml);
                         contents.Add(motd);
                     }
                     continue;
@@ -87,7 +82,12 @@ namespace McMotdParser.Deserializer
                             switch (propertyName)
                             {
                                 case "color":
-                                    motd.color = reader.GetString();
+                                    //simplify
+                                    string color = reader.GetString() ?? "";
+                                    MotdData.ColorDict.TryGetValue(color, out color);
+                                    if (string.IsNullOrEmpty(color))  color = reader.GetString();
+                                    
+                                    motd.color = color;
                                     break;
                                 case "bold":
                                     if (reader.GetBoolean()) motd.TextFormatting.Add(TextFormatEnum.Bold);
