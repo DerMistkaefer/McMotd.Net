@@ -3,6 +3,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using McMotdParser.Data;
 using McMotdParser.Deserializer;
 
 namespace McMotdParser
@@ -10,7 +11,6 @@ namespace McMotdParser
     public class MotdParser
     {
         private string RawMotd;
-       
 
         public MotdParser(string raw_motd)
         {
@@ -30,9 +30,10 @@ namespace McMotdParser
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("{ \"Contents\" : ");
-            if (!raw_motd.StartsWith('{')) sb.Append('\"');
+            bool isStartObject = !raw_motd.StartsWith('{');
+            if (isStartObject) sb.Append('\"');
             sb.Append(raw_motd);
-            if (!raw_motd.StartsWith('{')) sb.Append('\"');
+            if (isStartObject) sb.Append('\"');
             sb.Append('}');
             
             return sb.ToString();
@@ -45,10 +46,6 @@ namespace McMotdParser
         }
     }
 
-    public class MotdContents
-    {
-        [JsonConverter(typeof(MotdDeserializer))]
-        public List<MotdContent > Contents { get; set; }
-    }
+
     
 }

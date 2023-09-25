@@ -1,11 +1,50 @@
+using McMotdParser.Deserializer;
 using McMotdParser.Enum;
+using System.Text.Json.Serialization;
 
 namespace McMotdParser;
 public class MotdContent
 {
     public string? color { get;set;}
     public string content {get;set;}
-    public List<TextFormatEnum> TextFormatting { get; set; } = new List<TextFormatEnum>();
+    public HashSet<TextFormatEnum> TextFormatting { get; set; } = new HashSet<TextFormatEnum>();
 
-    public virtual void build() {}
+    public override bool Equals(object? obj)
+    {
+        if (obj == null) return false;
+        if (!ReferenceEquals(this, obj)) return false;
+
+        var target = (MotdContent)obj;
+        if(this.content != target.content) return false;
+        if(this.color != target.color) return false;
+        if(this.TextFormatting.Equals(target.TextFormatting)) return false;
+        for(int i = 0; i < this.TextFormatting.Count; i++)
+        {
+        }
+        return true;
+    }
+}
+
+
+public class MotdContents
+{
+    [JsonConverter(typeof(MotdDeserializer))]
+    public List<MotdContent> Contents { get; set; }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj == null) return false;
+        if (!ReferenceEquals(this.Contents, obj)) return false;
+
+        var targets = (List<MotdContent>)obj;
+
+        for(int i = 0; i < Contents.Count; i++)
+        {
+            var content = Contents[i];
+            var target = targets[i];
+            if (!content.Equals(target)) return false;
+        }
+
+        return true;
+    }
 }

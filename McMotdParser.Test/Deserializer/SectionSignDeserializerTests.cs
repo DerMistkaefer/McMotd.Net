@@ -1,5 +1,6 @@
 ﻿using McMotdParser.Deserializer;
 using System;
+using System.Diagnostics;
 using Xunit;
 
 namespace McMotdParser.Test.Deserializer
@@ -24,7 +25,12 @@ namespace McMotdParser.Test.Deserializer
             var sectionSignDeserializer = new SectionSignDeserializer(@"§aHypixel Network §c[1.8-1.20]\r\n        §b§lDROPPER v1.0 §7- §6§lNEW ARCADE LOBBY");
 
             // Act
-            sectionSignDeserializer.deserialize();
+            List<MotdContent> contents = sectionSignDeserializer.deserialize();
+
+            contents.ForEach(x =>
+            {
+                Debug.WriteLine(x.content);
+            });
 
             // Assert
             Assert.True(true);

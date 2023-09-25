@@ -1,4 +1,5 @@
 ﻿using McMotdParser.Deserializer;
+using McMotdParser.Enum;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using System;
 using System.Diagnostics;
@@ -15,13 +16,14 @@ namespace McMotdParser.Test.Deserializer
             string raw_motd = @"{""text"":""기모찌서버""}";
             var testResult = new MotdParser(raw_motd).testFunc();
 
-            testResult.Contents.ForEach(x =>
+            MotdContents contents= new MotdContents();
+            List<MotdContent> except = new List<MotdContent>()
             {
-                Debug.WriteLine(x.content);
-            });
+                new MotdContent() { color =  null, content = "기모찌 서버", TextFormatting = { TextFormatEnum.Noraml }  }
+            };
+            contents.Contents = except;
 
-
-            Assert.Equal(testResult.Contents[0].content,"기모찌서버");
+            Assert.Equal(testResult, contents);
         }
         [Fact]
         public void ComplexJsonMotdDeserialize()
@@ -32,14 +34,17 @@ namespace McMotdParser.Test.Deserializer
 
             testResult.Contents.ForEach(x =>
             {
-                Debug.WriteLine(x.content);
+                Debug.WriteLine(x.color);
             });
+            List<MotdContent> except = new List<MotdContent>()
+            {
 
+            };
 
             Assert.True(true);
         }
 
-        [Fact]
+        [Fact]  
         public void SectionSignMotdDeserialize()
         {
             string raw_motd = "                §aHypixel Network §c[1.8-1.20]\r\n        §b§lDROPPER v1.0 §7- §6§lNEW ARCADE LOBBY";
@@ -50,7 +55,10 @@ namespace McMotdParser.Test.Deserializer
             {
                 Debug.WriteLine(x.content);
             });
+            List<MotdContent> except = new List<MotdContent>()
+            {
 
+            };
 
 
             Assert.True(true);

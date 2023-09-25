@@ -6,6 +6,7 @@ public enum TextFormatEnum
     Italic,
     Underline,
     Striktethrough,
+    Obfuscated,
+    Reset,
     Noraml
-
 }
