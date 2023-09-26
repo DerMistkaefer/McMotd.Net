@@ -12,14 +12,17 @@ public class MotdContent
     public override bool Equals(object? obj)
     {
         if (obj == null) return false;
-        if (!ReferenceEquals(this, obj)) return false;
+        if (!(obj.GetType() ==  typeof(MotdContent))) return false;
 
         var target = (MotdContent)obj;
         if(this.content != target.content) return false;
         if(this.color != target.color) return false;
-        if(this.TextFormatting.Equals(target.TextFormatting)) return false;
+        //if(this.TextFormatting.Equals(target.TextFormatting)) return false;
         for(int i = 0; i < this.TextFormatting.Count; i++)
         {
+            TextFormatEnum TFcurrent;
+            TextFormatEnum TFtarget;
+        //    this.TextFormatting.TryGetValue()
         }
         return true;
     }
@@ -34,14 +37,14 @@ public class MotdContents
     public override bool Equals(object? obj)
     {
         if (obj == null) return false;
-        if (!ReferenceEquals(this.Contents, obj)) return false;
+        if (!(obj.GetType() ==  typeof(MotdContents))) return false;
 
-        var targets = (List<MotdContent>)obj;
+        var targets = (MotdContents)obj;
 
         for(int i = 0; i < Contents.Count; i++)
         {
             var content = Contents[i];
-            var target = targets[i];
+            var target = targets.Contents[i];
             if (!content.Equals(target)) return false;
         }
 

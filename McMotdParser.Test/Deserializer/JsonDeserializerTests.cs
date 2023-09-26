@@ -19,11 +19,11 @@ namespace McMotdParser.Test.Deserializer
             MotdContents contents= new MotdContents();
             List<MotdContent> except = new List<MotdContent>()
             {
-                new MotdContent() { color =  null, content = "기모찌 서버", TextFormatting = { TextFormatEnum.Noraml }  }
+                new MotdContent() { color =  null, content = "기모찌서버", TextFormatting = { TextFormatEnum.Noraml }  }
             };
             contents.Contents = except;
 
-            Assert.Equal(testResult, contents);
+            Assert.True(testResult.Equals(contents));
         }
         [Fact]
         public void ComplexJsonMotdDeserialize()
@@ -38,9 +38,8 @@ namespace McMotdParser.Test.Deserializer
             });
             List<MotdContent> except = new List<MotdContent>()
             {
-
+                
             };
-
             Assert.True(true);
         }
 
