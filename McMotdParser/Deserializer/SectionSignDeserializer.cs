@@ -14,7 +14,6 @@ namespace McMotdParser.Deserializer
         private string raw_content;
         public SectionSignDeserializer(string raw_content) {
             this.raw_content = raw_content;
-
         }
         //TODO : 앞뒤 따음표 없애기
         //TODO : replace new simple variable name

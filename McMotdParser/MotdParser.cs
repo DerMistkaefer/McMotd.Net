@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
@@ -30,11 +31,11 @@ namespace McMotdParser
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("{ \"Contents\" : ");
-            bool isStartObject = !raw_motd.StartsWith('{');
+            bool isStartObject = !raw_motd.StartsWith("{");
             if (isStartObject) sb.Append('\"');
             sb.Append(raw_motd);
             if (isStartObject) sb.Append('\"');
-            sb.Append('}');
+            sb.Append(" }");
             
             return sb.ToString();
         }

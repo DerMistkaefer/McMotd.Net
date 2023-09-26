@@ -18,14 +18,11 @@ namespace McMotdParser.Deserializer
         {
             if (reader.TokenType != JsonTokenType.StartObject)
             {
-                Debug.WriteLine("Not Json Object");
                 using (var jsonDoc = JsonDocument.ParseValue(ref reader))
                 {
-                    Debug.WriteLine($"string contents : {jsonDoc.RootElement.GetRawText()}");
                     return new SectionSignDeserializer(jsonDoc.RootElement.GetRawText()).deserialize();
                 }
             }
-            Debug.WriteLine("Object Found");
             reader.Read();
             string? propertyName = reader.GetString(); //this indicate first key
 
@@ -36,12 +33,10 @@ namespace McMotdParser.Deserializer
 
                 MotdContent motd = new MotdContent();
 
-                Debug.WriteLine($"KEY PropertyName : {propertyName}");
 
                 //Execute simple json motd deserialize
                 if (propertyName == "text")
                 {
-                    Debug.WriteLine($"this section is Property : text");
                     string? content = reader.GetString();
                     if (!string.IsNullOrEmpty(content)) //temponary
                     {
@@ -53,10 +48,9 @@ namespace McMotdParser.Deserializer
                 }
                 //Execute complex json motd deserialize
                 //TODO : simplify,this code too complex
-                else if (propertyName == "extra")
+                if (propertyName == "extra")
                 {
                     //Array read
-                    //reader.Read();//Execute skip StartArray
                     if (reader.TokenType == JsonTokenType.StartArray)
                     {
                         while (reader.TokenType != JsonTokenType.EndArray)
@@ -66,7 +60,7 @@ namespace McMotdParser.Deserializer
 
                             if (reader.TokenType == JsonTokenType.EndObject)
                             {
-                                Debug.WriteLine($"MOTD, COLOR : {motd.color ?? "null"}, Content : {motd.content ?? "null"}");
+                               
                                 contents.Add(motd);
                                 motd = new MotdContent(); //reset
                                 continue;
@@ -83,7 +77,7 @@ namespace McMotdParser.Deserializer
                             {
                                 case "color":
                                     //simplify
-                                    string color = reader.GetString() ?? "";
+                                    string color = reader.GetString() ?? "#808080";
                                     MotdData.ColorDict.TryGetValue(color, out color);
                                     if (string.IsNullOrEmpty(color))  color = reader.GetString();
                                     

@@ -17,23 +17,24 @@ namespace McMotdParser.Test.Deserializer
             var testResult = new MotdParser(raw_motd).testFunc();
 
             MotdContents contents= new MotdContents();
-            List<MotdContent> except = new List<MotdContent>()
+            List<MotdContent> expect = new List<MotdContent>()
             {
                 new MotdContent() { color =  null, content = "기모찌서버", TextFormatting = { TextFormatEnum.Noraml }  }
             };
-            contents.Contents = except;
+            contents.Contents = expect;
 
             Assert.True(testResult.Equals(contents));
         }
         [Fact]
         public void ComplexJsonMotdDeserialize()
         {
-            string raw_motd = @"{""extra"":[{""color"":""aqua"",""text"":""◆ ""},{""bold"":true,""italic"":true,""color"":""#00ffff"",""text"":""스""},{""bold"":true,""italic"":true,""color"":""#19e5ff"",""text"":""티""},{""bold"":true,""italic"":true,""color"":""#33ccff"",""text"":""브""},{""bold"":true,""italic"":true,""color"":""#4cb2ff"",""text"":""""},{""bold"":true,""italic"":true,""color"":""#6699ff"",""text"":""갤""},{""bold"":true,""italic"":true,""color"":""#7f7fff"",""text"":""러""},{""bold"":true,""italic"":true,""color"":""#9966ff"",""text"":""리""},{""bold"":true,""italic"":true,""color"":""#b24cff"",""text"":""""},{""bold"":true,""italic"":true,""color"":""#cc32ff"",""text"":""놀""},{""bold"":true,""italic"":true,""color"":""#e519ff"",""text"":""이""},{""bold"":true,""italic"":true,""color"":""#ff00ff"",""text"":""터""},{""color"":""light_purple"",""text"":"" ◆\r\n""},{""color"":""gray"",""text"":""건축\/쉼터""}],""text"":""""}";
-
+            //string raw_motd = @"{""extra"":[{""color"":""aqua"",""text"":""◆ ""},{""bold"":true,""italic"":true,""color"":""#00ffff"",""text"":""스""},{""bold"":true,""italic"":true,""color"":""#19e5ff"",""text"":""티""},{""bold"":true,""italic"":true,""color"":""#33ccff"",""text"":""브""},{""bold"":true,""italic"":true,""color"":""#4cb2ff"",""text"":""""},{""bold"":true,""italic"":true,""color"":""#6699ff"",""text"":""갤""},{""bold"":true,""italic"":true,""color"":""#7f7fff"",""text"":""러""},{""bold"":true,""italic"":true,""color"":""#9966ff"",""text"":""리""},{""bold"":true,""italic"":true,""color"":""#b24cff"",""text"":""""},{""bold"":true,""italic"":true,""color"":""#cc32ff"",""text"":""놀""},{""bold"":true,""italic"":true,""color"":""#e519ff"",""text"":""이""},{""bold"":true,""italic"":true,""color"":""#ff00ff"",""text"":""터""},{""color"":""light_purple"",""text"":"" ◆\r\n""},{""color"":""gray"",""text"":""건축\/쉼터""}],""text"":""""}";
+            string raw_motd = "{\"extra\":[{\"color\":\"aqua\",\"text\":\"◆ \"},{\"bold\":true,\"italic\":true,\"color\":\"#00ffff\",\"text\":\"스\"},{\"bold\":true,\"italic\":true,\"color\":\"#19e5ff\",\"text\":\"티\"},{\"bold\":true,\"italic\":true,\"color\":\"#33ccff\",\"text\":\"브\"},{\"bold\":true,\"italic\":true,\"color\":\"#4cb2ff\",\"text\":\"\"},{\"bold\":true,\"italic\":true,\"color\":\"#6699ff\",\"text\":\"갤\"},{\"bold\":true,\"italic\":true,\"color\":\"#7f7fff\",\"text\":\"러\"},{\"bold\":true,\"italic\":true,\"color\":\"#9966ff\",\"text\":\"리\"},{\"bold\":true,\"italic\":true,\"color\":\"#b24cff\",\"text\":\"\"},{\"bold\":true,\"italic\":true,\"color\":\"#cc32ff\",\"text\":\"놀\"},{\"bold\":true,\"italic\":true,\"color\":\"#e519ff\",\"text\":\"이\"},{\"bold\":true,\"italic\":true,\"color\":\"#ff00ff\",\"text\":\"터\"},{\"color\":\"light_purple\",\"text\":\" ◆\r\n\"},{\"color\":\"gray\",\"text\":\"건축/쉼터\"}],\"text\":\" \"\"}";
+            
             var testResult = new MotdParser(raw_motd).testFunc();
             MotdContents contents = new MotdContents();
             
-            List<MotdContent> except = new List<MotdContent>()
+            List<MotdContent> expect = new List<MotdContent>()
             {
                 new MotdContent{ color = "#55FFFF", content = "◆ "},
                 new MotdContent{ color = "#00ffff", content = "스", TextFormatting = new HashSet<TextFormatEnum> { TextFormatEnum.Bold,TextFormatEnum.Italic } },
@@ -51,7 +52,7 @@ namespace McMotdParser.Test.Deserializer
                 new MotdContent{ color = "#AAAAAA", content = "건축/쉼터" },
             };
 
-            contents.Contents = except;
+            contents.Contents = expect;
             Assert.True(testResult.Equals(contents));
         }
 
@@ -76,7 +77,16 @@ namespace McMotdParser.Test.Deserializer
 
             contents.Contents = except;
 
-            Assert.True(true);
+            Assert.True(testResult.Equals(contents));
+        }
+
+        [Fact]
+        public void Replace()
+        {
+            string raw = "a\rb";
+            raw = raw.Replace("\r", "");
+            string expect = "ab";
+            Assert.True(raw == expect);
         }
     }
 }
