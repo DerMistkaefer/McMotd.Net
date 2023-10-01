@@ -1,0 +1,53 @@
+﻿@using McMotdParser.Data;
+@using McMotdParser;
+@using McMotdParser.Enum
+@using System.Text
+<div class="mcmotd-container">
+    @foreach(var motd in motds.Contents)
+    {
+        <span class="@getStyle(motd.TextFormatting)" style="color: @motd.color">
+            @motd.content
+        </span>
+    }
+</div>
+
+
+
+@code{
+    [Parameter]
+    public string RawMotdString { get; set; }
+    
+    private MotdContents motds { get; set; }
+
+    protected override void OnInitialized()
+    {
+        motds = new MotdParser(RawMotdString).testFunc();
+        base.OnInitialized();
+    }
+
+    public string getStyle(HashSet<TextFormatEnum> TextFormat)
+    {
+        StringBuilder sb = new StringBuilder();
+        foreach (var format in TextFormat)
+        {
+            switch (format)
+            {
+                case TextFormatEnum.Bold:
+                    sb.Append("mcmotd-text-bold");
+                    break;
+                case TextFormatEnum.Italic:
+                    sb.Append("mcmotd-text-italic");
+                    break;
+                case TextFormatEnum.Underline:
+                    sb.Append("mcmotd-text-underline");
+                    break;
+                default:
+                    sb.Append(".mcmotd-text-normal");
+                    break;
+            }
+            sb.Append(" ");
+        }
+        return sb.ToString();
+    }
+
+} 

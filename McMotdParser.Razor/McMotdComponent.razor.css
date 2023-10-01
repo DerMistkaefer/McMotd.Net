@@ -1,0 +1,14 @@
+﻿.mcmotd-container{
+    width : 100%;
+    height : 100%;
+    overflow-wrap : break-word;
+}
+.mcmotd-text-bold{
+    font-weight: bold;
+}
+.mcmotd-text-italic{
+    font-style: italic;
+}
+.mcmotd-text-underline{
+    text-decoration: underline;
+}
