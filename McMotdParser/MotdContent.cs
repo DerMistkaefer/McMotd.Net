@@ -5,9 +5,10 @@ using System.Text.Json.Serialization;
 namespace McMotdParser;
 public class MotdContent
 {
-    public string color { get; set; } = "#808080";
-    public string content { get; set; }
+    public string Color { get; set; } = "#808080";
+    public string Text { get; set; }
     public HashSet<TextFormatEnum> TextFormatting { get; set; } = new HashSet<TextFormatEnum>();
+    public bool LineBreak { get; set; } = false;
 
     public override bool Equals(object? obj)
     {
@@ -15,8 +16,8 @@ public class MotdContent
         if (!(obj.GetType() == typeof(MotdContent))) return false;
 
         var target = (MotdContent)obj;
-        if (this.content != target.content) return false;
-        if (this.color != target.color) return false;
+        if (this.Text != target.Text) return false;
+        if (this.Color != target.Color) return false;
         //if(this.TextFormatting.Equals(target.TextFormatting)) return false;
         if (this.TextFormatting.Count != target.TextFormatting.Count) return false;
         return true;

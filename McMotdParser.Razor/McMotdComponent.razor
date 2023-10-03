@@ -3,10 +3,15 @@
 @using McMotdParser.Enum
 @using System.Text
 <div class="mcmotd-container">
-    @foreach(var motd in motds.Contents)
+    @foreach(MotdContent motd in motds)
     {
-        <span class="@getStyle(motd.TextFormatting)" style="color: @motd.color">
-            @motd.content
+        @if (motd.LineBreak)
+        {
+            <br/>
+        }
+        <span class="@getStyle(motd.TextFormatting)" style="color: @motd.Color">
+            @motd.Text 
+
         </span>
     }
 </div>
@@ -17,11 +22,11 @@
     [Parameter]
     public string RawMotdString { get; set; }
     
-    private MotdContents motds { get; set; }
+    private List<MotdContent> motds { get; set; }
 
     protected override void OnInitialized()
     {
-        motds = new MotdParser(RawMotdString).testFunc();
+        motds = new MotdParser().ToRazor(RawMotdString);
         base.OnInitialized();
     }
 
