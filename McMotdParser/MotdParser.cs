@@ -6,44 +6,32 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using McMotdParser.Data;
 using McMotdParser.Deserializer;
+using McMotdParser.Utils;
 
 namespace McMotdParser
 {
     public class MotdParser
     {
-        private string RawMotd;
 
-        public MotdParser(string raw_motd)
-        {
-            this.RawMotd = DefiniteForm(raw_motd);
-        }
 
-        public void ToXaml()
+        //inconstruct
+        public string ToHtml(string RawMotd)
         {
-
-        }
-        public string ToHtml()
-        {
-            return "";
-        }
-
-        private string DefiniteForm(string raw_motd)
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("{ \"Contents\" : ");
-            bool isStartObject = !raw_motd.StartsWith("{");
-            if (isStartObject) sb.Append('\"');
-            sb.Append(raw_motd);
-            if (isStartObject) sb.Append('\"');
-            sb.Append(" }");
             
-            return sb.ToString();
+            return string.Empty;
         }
 
-        public MotdContents testFunc(){
+        public List<MotdContent> ToTest(string RawMotd)
+        {
+            RawMotd = StringUtils.ToJsonObjectString(RawMotd);
+            RawMotd = StringUtils.EscapeCharacterReplace(RawMotd);
+            return this.deserialize(RawMotd);
+        }
+
+        public List<MotdContent> deserialize(string RawMotd){
             var option = new JsonSerializerOptions();
             option.Converters.Add(new MotdDeserializer());
-            return JsonSerializer.Deserialize<MotdContents>(this.RawMotd);
+            return JsonSerializer.Deserialize<MotdContents>(RawMotd,option).Contents;
         }
     }
 

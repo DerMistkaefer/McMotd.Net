@@ -37,11 +37,12 @@ namespace McMotdParser.Deserializer
                 //Execute simple json motd deserialize
                 if (propertyName == "text")
                 {
-                    string? content = reader.GetString();
+                    string? content = reader.GetString(); //find more sext variable
                     if (!string.IsNullOrEmpty(content)) //temponary
                     {
-                        motd.content = content;
+                        motd.Text = content;
                         motd.TextFormatting.Add(TextFormatEnum.Noraml);
+                        motd.LineBreak = content.EndsWith("§z§x");
                         contents.Add(motd);
                     }
                     continue;
@@ -81,7 +82,7 @@ namespace McMotdParser.Deserializer
                                     MotdData.ColorDict.TryGetValue(color, out color);
                                     if (string.IsNullOrEmpty(color))  color = reader.GetString();
                                     
-                                    motd.color = color;
+                                    motd.Color = color;
                                     break;
                                 case "bold":
                                     if (reader.GetBoolean()) motd.TextFormatting.Add(TextFormatEnum.Bold);
@@ -90,7 +91,9 @@ namespace McMotdParser.Deserializer
                                     if (reader.GetBoolean()) motd.TextFormatting.Add(TextFormatEnum.Italic);
                                     break;
                                 case "text":
-                                    motd.content = reader.GetString();
+                                    var motdline = reader.GetString();
+                                    motd.Text = motdline;
+                                    motd.LineBreak = motdline.EndsWith("§z§x");
                                     break;
                             }
                         }

@@ -16,6 +16,7 @@ namespace McMotdParser.Data
             {"n" ,  TextFormatEnum.Underline },
             {"o" ,  TextFormatEnum.Italic },
             {"r" ,  TextFormatEnum.Reset },
+            {"x" , TextFormatEnum.Noraml}
         };
     }
 }
