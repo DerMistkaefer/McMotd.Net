@@ -23,8 +23,8 @@ namespace McMotdParser
 
         public List<MotdContent> ToTest(string RawMotd)
         {
-            RawMotd = StringUtils.ToJsonObjectString(RawMotd);
             RawMotd = StringUtils.EscapeCharacterReplace(RawMotd);
+            RawMotd = StringUtils.ToJsonObjectString(RawMotd);
             return this.deserialize(RawMotd);
         }
 

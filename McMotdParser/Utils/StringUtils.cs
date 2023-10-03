@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Text;
 
 namespace McMotdParser.Utils;
@@ -15,11 +16,11 @@ public class StringUtils
         sb.Append("{ \"Contents\" : ");
         
         //determine using "Section Sign"
-        bool isStartObject = !motd.StartsWith("{");
+        //bool isStartObject = !motd.StartsWith("{");
         
-        if (isStartObject) sb.Append('\"');
+        //if (isStartObject) sb.Append('\"');
         sb.Append(motd);
-        if (isStartObject) sb.Append('\"');
+        //if (isStartObject) sb.Append('\"');
         sb.Append(" }");
             
         return sb.ToString();
@@ -27,6 +28,6 @@ public class StringUtils
 
     public static string EscapeCharacterReplace(string motd)
     {
-        return motd.Replace("\r\n","\n").Replace("\n","§z§x");
+        return motd.Replace("\r\n","§z§x");
     }
 }

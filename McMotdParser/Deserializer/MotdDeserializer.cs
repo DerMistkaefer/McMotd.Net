@@ -20,7 +20,7 @@ namespace McMotdParser.Deserializer
             {
                 using (var jsonDoc = JsonDocument.ParseValue(ref reader))
                 {
-                    return new SectionSignDeserializer(jsonDoc.RootElement.GetRawText()).deserialize();
+                    return new SectionSignDeserializer(jsonDoc.RootElement.GetString()).deserialize();
                 }
             }
             reader.Read();
@@ -37,12 +37,12 @@ namespace McMotdParser.Deserializer
                 //Execute simple json motd deserialize
                 if (propertyName == "text")
                 {
-                    string? content = reader.GetString(); //find more sext variable
-                    if (!string.IsNullOrEmpty(content)) //temponary
+                    string? value = reader.GetString();
+                    if (!string.IsNullOrEmpty(value)) //temponary //this condition do filtering extra value
                     {
-                        motd.Text = content;
+                        motd.Text = value;
                         motd.TextFormatting.Add(TextFormatEnum.Noraml);
-                        motd.LineBreak = content.EndsWith("§z§x");
+                        //motd.LineBreak = value.EndsWith("§z§x");
                         contents.Add(motd);
                     }
                     continue;
@@ -77,10 +77,11 @@ namespace McMotdParser.Deserializer
                             switch (propertyName)
                             {
                                 case "color":
-                                    //simplify
                                     string color = reader.GetString() ?? "#808080";
-                                    MotdData.ColorDict.TryGetValue(color, out color);
-                                    if (string.IsNullOrEmpty(color))  color = reader.GetString();
+                                    if (!color.StartsWith("#"))
+                                    {
+                                        color = MotdData.ColorDict[color];
+                                    }
                                     
                                     motd.Color = color;
                                     break;
@@ -91,9 +92,14 @@ namespace McMotdParser.Deserializer
                                     if (reader.GetBoolean()) motd.TextFormatting.Add(TextFormatEnum.Italic);
                                     break;
                                 case "text":
-                                    var motdline = reader.GetString();
-                                    motd.Text = motdline;
-                                    motd.LineBreak = motdline.EndsWith("§z§x");
+                                    var value = reader.GetString();
+                                    bool linebreak = value.Contains("§z§x");
+                                    if (linebreak)
+                                    {
+                                        value = value.Replace("§z§x", "");
+                                        motd.LineBreak = linebreak;
+                                    }
+                                    motd.Text = value;
                                     break;
                             }
                         }

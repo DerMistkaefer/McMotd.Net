@@ -8,9 +8,11 @@ namespace McMotdParser{
     {
         public static List<MotdContent> ToRazor(this MotdParser parser,string RawMotd)
         {
-            
-
-            return parser.deserialize(StringUtils.ToJsonObjectString(RawMotd));;
+            string raw = RawMotd;
+            raw = raw.Replace(" ", "&nbsp;");
+            raw =StringUtils.EscapeCharacterReplace(raw);
+            raw = StringUtils.ToJsonObjectString(raw);
+            return parser.deserialize(raw);;
         }
     }
 
