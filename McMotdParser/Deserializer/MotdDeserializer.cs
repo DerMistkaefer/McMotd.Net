@@ -33,7 +33,6 @@ namespace McMotdParser.Deserializer
 
                 MotdContent motd = new MotdContent();
 
-
                 //Execute simple json motd deserialize
                 if (propertyName == "text")
                 {
@@ -59,9 +58,9 @@ namespace McMotdParser.Deserializer
                             reader.Read();
                             if(reader.TokenType == JsonTokenType.StartObject) reader.Read(); //Execute skip StartObject
 
+                            //Add MotdLine add
                             if (reader.TokenType == JsonTokenType.EndObject)
                             {
-                               
                                 contents.Add(motd);
                                 motd = new MotdContent(); //reset
                                 continue;
@@ -78,12 +77,7 @@ namespace McMotdParser.Deserializer
                             {
                                 case "color":
                                     string color = reader.GetString() ?? "#808080";
-                                    if (!color.StartsWith("#"))
-                                    {
-                                        color = MotdData.ColorDict[color];
-                                    }
-                                    
-                                    motd.Color = color;
+                                    motd.Color = color.StartsWith("#") ? color : MotdData.ColorDict[color];
                                     break;
                                 case "bold":
                                     if (reader.GetBoolean()) motd.TextFormatting.Add(TextFormatEnum.Bold);
@@ -93,13 +87,13 @@ namespace McMotdParser.Deserializer
                                     break;
                                 case "text":
                                     var value = reader.GetString();
-                                    bool linebreak = value.Contains("§z§x");
+                                    bool linebreak = value.Contains("§z");
                                     if (linebreak)
                                     {
-                                        value = value.Replace("§z§x", "");
+                                        value = value.Replace("§z", "").Replace("§x","");
                                         motd.LineBreak = linebreak;
                                     }
-                                    motd.Text = value;
+                                    motd.Text = string.IsNullOrEmpty(value) ? " " : value; //space add
                                     break;
                             }
                         }

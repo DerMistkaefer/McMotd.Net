@@ -11,50 +11,49 @@ namespace McMotdParser.Deserializer
     public class SectionSignDeserializer
     {
         private readonly string SIGN = "§";
-        private string raw_content;
-        public SectionSignDeserializer(string raw_content) {
-            this.raw_content = raw_content;
+        private string RawMotd;
+        public SectionSignDeserializer(string RawMotd) {
+            this.RawMotd = RawMotd;
         }
-        //TODO : 앞뒤 따음표 없애기
         //TODO : replace new simple variable name
         public List<MotdContent> deserialize(){
             List<MotdContent> MotdContents = new List<MotdContent> ();
 
-            var motd_content = new MotdContent();
+            var motdContent = new MotdContent();
             //plain text return 
-            if (!this.raw_content.Contains(SIGN))
+            if (!this.RawMotd.Contains(SIGN))
             {
-                motd_content.Text = this.raw_content;
-                MotdContents.Add(motd_content);
+                motdContent.Text = this.RawMotd;
+                MotdContents.Add(motdContent);
                 return MotdContents;
             }
-            var splited_contents = this.raw_content.Split(SIGN);
-
-            for(int i = 0; i< splited_contents.Length; i++) {
-                string raw_line = splited_contents[i];
+            var splitedRawMotd = this.RawMotd.Split(SIGN);
+            
+            for(int i = 0; i< splitedRawMotd.Length; i++) {
+                string RawLine = splitedRawMotd[i];
                 if(i == 0)
                 {
-                    if (string.IsNullOrEmpty(raw_line)) continue;
-                    motd_content.Text = raw_line;
-                    MotdContents.Add(motd_content);
-                    motd_content = new MotdContent();
+                    if (string.IsNullOrEmpty(RawLine)) continue;
+                    motdContent.Text = RawLine;
+                    MotdContents.Add(motdContent);
+                    motdContent = new MotdContent();
                     continue;
                 }
-                if (raw_line.Length == 1)
+                if (RawLine.Length == 1)
                 {
-                    SignParser(raw_line,ref motd_content);
+                    SignParser(RawLine,ref motdContent);
                     continue;
                 }
                 //extract first character
-                string SectionSign = raw_line[0].ToString();
-                string text = raw_line.Substring(1);
+                string SectionSign = RawLine[0].ToString();
+                string text = RawLine.Substring(1);
 
-                SignParser(SectionSign,ref motd_content);
+                SignParser(SectionSign,ref motdContent);
                 
-                motd_content.Text = text;
-
-                MotdContents.Add(motd_content);
-                motd_content = new MotdContent();
+                motdContent.Text = text;
+                
+                MotdContents.Add(motdContent);
+                motdContent = new MotdContent();
             }
             return MotdContents;
         }

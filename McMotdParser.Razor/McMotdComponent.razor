@@ -10,7 +10,7 @@
             <br/>
         }
         <span class="@getStyle(motd.TextFormatting)" style="color: @motd.Color">
-            @motd.Text 
+            @motd.Text
         </span>
     }
 </div>
@@ -29,12 +29,12 @@
         base.OnInitialized();
     }
 
-    public string getStyle(HashSet<TextFormatEnum> TextFormat)
+    protected string getStyle(HashSet<TextFormatEnum> TextFormats)
     {
         StringBuilder sb = new StringBuilder();
-        foreach (var format in TextFormat)
+        foreach (var TextFormat in TextFormats)
         {
-            switch (format)
+            switch (TextFormat)
             {
                 case TextFormatEnum.Bold:
                     sb.Append("mcmotd-text-bold");
@@ -45,8 +45,11 @@
                 case TextFormatEnum.Underline:
                     sb.Append("mcmotd-text-underline");
                     break;
+                case TextFormatEnum.Striktethrough:
+                    sb.Append("mcmotd-text-strikethrough");
+                    break;    
                 default:
-                    sb.Append(".mcmotd-text-normal");
+                    sb.Append("mcmotd-text-normal");
                     break;
             }
             sb.Append(" ");

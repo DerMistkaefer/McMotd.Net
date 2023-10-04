@@ -1,6 +1,3 @@
-
-
-
 using McMotdParser.Utils;
 
 namespace McMotdParser{
@@ -8,9 +5,11 @@ namespace McMotdParser{
     {
         public static List<MotdContent> ToRazor(this MotdParser parser,string RawMotd)
         {
+            
             string raw = RawMotd;
+            
             raw = raw.Replace(" ", "&nbsp;");
-            raw =StringUtils.EscapeCharacterReplace(raw);
+            raw = StringUtils.EscapeCharacterReplace(raw);
             raw = StringUtils.ToJsonObjectString(raw);
             return parser.deserialize(raw);;
         }

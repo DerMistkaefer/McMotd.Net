@@ -28,6 +28,16 @@ public class StringUtils
 
     public static string EscapeCharacterReplace(string motd)
     {
-        return motd.Replace("\r\n","§z§x");
+        return motd.Replace("\r", "§x").Replace("\n", "§z");
+    }
+
+    public static string QuotesReplace(string motd)
+    {
+        if (motd.StartsWith(@""""))
+        {
+            motd = motd.Substring(2, motd.Length - 3);
+        }
+
+        return motd;
     }
 }

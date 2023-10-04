@@ -12,3 +12,6 @@
 .mcmotd-text-underline{
     text-decoration: underline;
 }
+.mcmotd-text-strikethrough {
+    text-decoration: line-through;
+}
