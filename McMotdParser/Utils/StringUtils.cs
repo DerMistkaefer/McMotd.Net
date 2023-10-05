@@ -9,7 +9,7 @@ public class StringUtils
     /// This is a string converter for custom deserializers.
     /// </summary>
     /// <param name="motd">any motd string</param>
-    /// <returns>{ Contents : "{any motd string}"}</returns>
+    /// <returns>{ Contents : {any motd string}}</returns>
     public static string ToJsonObjectString(string motd)
     {
         StringBuilder sb = new StringBuilder();
@@ -25,6 +25,11 @@ public class StringUtils
             
         return sb.ToString();
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="motd"></param>
+    /// <returns>"some string §x§z"</returns>
 
     public static string EscapeCharacterReplace(string motd)
     {
@@ -35,9 +40,19 @@ public class StringUtils
     {
         if (motd.StartsWith(@""""))
         {
-            motd = motd.Substring(2, motd.Length - 3);
+            return motd.Substring(2, motd.Length - 3);
         }
 
+        return motd;
+    }
+
+    public static string QuotesPlace(string motd)
+    {
+        if (!motd.StartsWith(@""""))
+        {
+            return motd.Insert(0, "\"").Insert(motd.Length + 1 , "\""); //hmm...
+            
+        }
         return motd;
     }
 }

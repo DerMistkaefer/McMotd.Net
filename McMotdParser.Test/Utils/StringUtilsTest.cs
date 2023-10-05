@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using McMotdParser.Utils;
 
 namespace McMotdParser.Test.Utils;
@@ -27,5 +28,15 @@ public class StringUtilsTest
         
         Assert.Equal(RawMotd,expect);
 
+    }
+
+    [Fact]
+    public void QuotePlaceTest()
+    {
+        string text = "12345";
+        
+        string expect = @"""12345""";
+        
+        Assert.Equal(expect,StringUtils.QuotesPlace(text));
     }
 }
