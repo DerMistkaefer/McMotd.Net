@@ -10,13 +10,16 @@
             <br/>
         }
         <span class="@getStyle(motd.TextFormatting)" style="color: @motd.Color">
-            @motd.Text
+            @if (motd.TextFormatting.Contains(TextFormatEnum.Bold))
+            {
+                <strong>@motd.Text</strong>
+            }else
+            {
+                @motd.Text    
+            }
         </span>
     }
 </div>
-
-
-
 @code{
     [Parameter]
     public string RawMotdString { get; set; }

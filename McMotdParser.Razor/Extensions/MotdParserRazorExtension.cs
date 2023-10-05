@@ -8,7 +8,7 @@ namespace McMotdParser{
             
             string raw = RawMotd;
             
-            raw = raw.Replace(" ", "&nbsp;");
+//            raw = raw.Replace(" ", "&nbsp;");
             raw = StringUtils.EscapeCharacterReplace(raw);
             raw = StringUtils.ToJsonObjectString(raw);
             return parser.deserialize(raw);;

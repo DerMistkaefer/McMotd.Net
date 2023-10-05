@@ -26,6 +26,8 @@ namespace McMotdParser.Deserializer
             reader.Read();
             string? propertyName = reader.GetString(); //this indicate first key
 
+            bool nextLinebreak = false; //this will work after one cycle 
+            
             List<MotdContent> contents = new List<MotdContent>();
             while (reader.Read())
             {
@@ -87,12 +89,21 @@ namespace McMotdParser.Deserializer
                                     break;
                                 case "text":
                                     var value = reader.GetString();
-                                    bool linebreak = value.Contains("§z");
-                                    if (linebreak)
+                                    
+                                    //this 
+                                    if (nextLinebreak)
+                                    {
+                                        motd.LineBreak = true;
+                                        nextLinebreak = false;
+                                    }
+
+                                    if (value.Contains("§z"))
                                     {
                                         value = value.Replace("§z", "").Replace("§x","");
-                                        motd.LineBreak = linebreak;
+                                        nextLinebreak = true;
                                     }
+
+                                    
                                     motd.Text = string.IsNullOrEmpty(value) ? " " : value; //space add
                                     break;
                             }
