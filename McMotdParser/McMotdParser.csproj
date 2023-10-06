@@ -1,9 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
+    <PackageId>McMotd.Net</PackageId>
+    <Authors>NJoyShadow</Authors>
+    <PackageVersion>0.0.1</PackageVersion>
+    <Copyright>Copyright (c) NJoyShadow 2023</Copyright>
+    <PackageProjectUrl>https://github.com/N-Joy-Shadow/McMotd.Net</PackageProjectUrl>
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <Description>
+      McMotd parse Raw minecraft motd to object  
+    </Description>
   </PropertyGroup>
 
 </Project>

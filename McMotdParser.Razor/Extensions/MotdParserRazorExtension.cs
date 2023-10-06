@@ -5,13 +5,7 @@ namespace McMotdParser{
     {
         public static List<MotdContent> ToRazor(this MotdParser parser,string RawMotd)
         {
-            
-            string raw = RawMotd;
-            
-//            raw = raw.Replace(" ", "&nbsp;");
-            raw = StringUtils.EscapeCharacterReplace(raw);
-            raw = StringUtils.ToJsonObjectString(raw);
-            return parser.deserialize(raw);;
+            return parser.deserialize(RawMotd);
         }
     }
 

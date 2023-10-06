@@ -29,13 +29,16 @@ public class StringUtils
     /// 
     /// </summary>
     /// <param name="motd"></param>
-    /// <returns>"some string §x§z"</returns>
-
+    /// <returns>"some string §x§zstring"</returns>
     public static string EscapeCharacterReplace(string motd)
     {
+        if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+        {
+            return motd.Replace("\\r", "§x").Replace("\\n", "§z");
+        }
         return motd.Replace("\r", "§x").Replace("\n", "§z");
+        
     }
-
     public static string QuotesReplace(string motd)
     {
         if (motd.StartsWith(@""""))
@@ -48,10 +51,12 @@ public class StringUtils
 
     public static string QuotesPlace(string motd)
     {
-        if (!motd.StartsWith(@""""))
+        if (!motd.StartsWith("{"))
         {
-            return motd.Insert(0, "\"").Insert(motd.Length + 1 , "\""); //hmm...
-            
+            if (!motd.StartsWith(@""""))
+            {
+                return motd.Insert(0, "\"").Insert(motd.Length + 1 , "\""); //hmm...
+            }
         }
         return motd;
     }

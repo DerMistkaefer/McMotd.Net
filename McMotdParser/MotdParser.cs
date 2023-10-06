@@ -28,19 +28,17 @@ namespace McMotdParser
         //TOOD: Adding Style
         public string ToHtml(string RawMotd)
         {
-            RawMotd = StringUtils.EscapeCharacterReplace(RawMotd);
-            RawMotd = StringUtils.ToJsonObjectString(RawMotd);
-            
             var contents = this.deserialize(RawMotd);
             StringBuilder sb = new StringBuilder();
             sb.Append(@"<div class=""mcmotd-container"">");
             foreach (var content in contents)
             {
                 sb.Append("<span");
-                sb.Append($" style=\"color:{content.Color};\"");
-                sb.Append(">");
+                sb.Append($" style=\"color:{content.Color};");
+                sb.Append(HtmlStyle(content.TextFormatting));
+                sb.Append("\">");
                 if (content.LineBreak) sb.Append("<br/>");
-                sb.Append(content.Text.Replace(" ","&nbsp;" ));
+                sb.Append(content.Text.Replace(" ","&nbsp;"));
                 sb.Append("</span>");
             }
             sb.Append("</div>");
@@ -56,28 +54,35 @@ namespace McMotdParser
                 switch (TextFormat)
                 {
                     case TextFormatEnum.Bold:
-                        sb.Append("mcmotd-text-bold");
+                        sb.Append("font-weight : bolder");
                         break;
                     case TextFormatEnum.Italic:
-                        sb.Append("mcmotd-text-italic");
+                        sb.Append("font-style : italic");
                         break;
                     case TextFormatEnum.Underline:
-                        sb.Append("mcmotd-text-underline");
+                        sb.Append("text-decoration : underline");
                         break;
                     case TextFormatEnum.Striktethrough:
-                        sb.Append("mcmotd-text-strikethrough");
+                        sb.Append("text-decoration : line-through");
                         break;
                     default:
-                        sb.Append("mcmotd-text-normal");
                         break;
                 }
 
                 sb.Append(";");
             }
 
-            return "";
+            return sb.ToString();
         }
-        public List<MotdContent> deserialize(string RawMotd){
+        public List<MotdContent> deserialize(string RawMotd)
+        {
+            RawMotd = new StringUtilBuilder()
+                            .setString(RawMotd)
+                            .EscapeCharacterReplace()
+                            .ToJsonObjectString()
+                            .build();
+            
+            
             var option = new JsonSerializerOptions();
             option.Converters.Add(new MotdDeserializer());
             return JsonSerializer.Deserialize<MotdContents>(RawMotd,option).Contents;
