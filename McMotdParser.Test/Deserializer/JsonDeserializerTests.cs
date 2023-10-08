@@ -68,7 +68,7 @@ namespace McMotdParser.Test.Deserializer
                 new MotdContent { Color = "#808080", Text = "               " },
                 new MotdContent { Color = "#55FF55", Text = "Hypixel Network "},
                 new MotdContent { Color = "#FF5555", Text = "[1.8-1.20]" },
-                new MotdContent { Color = "#808080", Text = "        " , LineBreak = true}, //여기서 lineBreak 걸림
+                new MotdContent { Color = "#808080", Text = "        " , LineBreak = true}, 
                 new MotdContent { Color = "#55FFFF", Text = "DROPPER v1.0 ", TextFormatting = new HashSet<TextFormatEnum> { TextFormatEnum.Bold }},
                 new MotdContent { Color = "#AAAAAA", Text = "- " },
                 new MotdContent { Color = "#FFAA00", Text = "NEW ARCADE LOBBY", TextFormatting = new HashSet<TextFormatEnum> { TextFormatEnum.Bold }}
@@ -77,6 +77,17 @@ namespace McMotdParser.Test.Deserializer
             contents.Contents = except;
 
             Assert.True(testResult.Equals(contents.Contents));
+        }
+
+        [Fact]
+        public void ToMarkDown()
+        {
+            string RawMotd = "§aHypixel Network §c[1.8-1.20]\r\n§b§lTest";
+
+
+            var testResult = new MotdParser().ToHtml(RawMotd);
+            
+            Assert.True(true);
         }
     }
 }

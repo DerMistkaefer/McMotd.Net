@@ -12,7 +12,7 @@ public class StringUtilsTest
         //string raw = StringUtils.EscapeCharacterReplace("\r\n"); //it's work
         //string raw = "\r\n".Replace("\r\n","§z§x"); //it's work
 
-        string expect = "§z§x";
+        string expect = "§x§z";
         
         Assert.Equal(StringUtils.EscapeCharacterReplace(raw),expect); //it's work
     }
@@ -22,11 +22,11 @@ public class StringUtilsTest
     public void TestMoreSimilarReal(string RawMotd)
     {
         //RawMotd = StringUtils.EscapeCharacterReplace(RawMotd);
-        RawMotd = StringUtils.ToJsonObjectString(RawMotd);
+        RawMotd = StringUtils.EscapeCharacterReplace(RawMotd);
 
-        string expect = "[1.8-1.20]§z§x";
+        string expect = "[1.8-1.20]§x§z";
         
-        Assert.Equal(RawMotd,expect);
+        Assert.Equal(expect,RawMotd);
 
     }
 

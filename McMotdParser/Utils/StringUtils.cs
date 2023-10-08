@@ -34,12 +34,13 @@ public class StringUtils
     {
         if (Environment.OSVersion.Platform == PlatformID.Win32NT)
         {
-            return motd.Replace("\\r", "§x").Replace("\\n", "§z");
+            motd = motd.Replace("\\r", "\r").Replace("\\n", "\n");
+            return motd.Replace("\r", "§x").Replace("\n", "§z");
         }
         return motd.Replace("\r", "§x").Replace("\n", "§z");
         
     }
-    public static string QuotesReplace(string motd)
+    public static string QuotesREMOVE(string motd)
     {
         if (motd.StartsWith(@""""))
         {

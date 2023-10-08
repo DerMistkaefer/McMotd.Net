@@ -16,12 +16,10 @@ namespace McMotdParser
     {
 
         
-        
+
         public List<MotdContent> ToTest(string RawMotd)
         {
-            
-            RawMotd = StringUtils.EscapeCharacterReplace(RawMotd);
-            RawMotd = StringUtils.ToJsonObjectString(RawMotd);
+     
             return this.deserialize(RawMotd);
         }
         //inconstruct
@@ -54,22 +52,21 @@ namespace McMotdParser
                 switch (TextFormat)
                 {
                     case TextFormatEnum.Bold:
-                        sb.Append("font-weight : bolder");
+                        sb.Append("font-weight : bolder;");
                         break;
                     case TextFormatEnum.Italic:
-                        sb.Append("font-style : italic");
+                        sb.Append("font-style : italic;");
                         break;
                     case TextFormatEnum.Underline:
-                        sb.Append("text-decoration : underline");
+                        sb.Append("text-decoration : underline;");
                         break;
                     case TextFormatEnum.Striktethrough:
-                        sb.Append("text-decoration : line-through");
+                        sb.Append("text-decoration : line-through;");
                         break;
                     default:
                         break;
                 }
 
-                sb.Append(";");
             }
 
             return sb.ToString();
@@ -78,6 +75,7 @@ namespace McMotdParser
         {
             RawMotd = new StringUtilBuilder()
                             .setString(RawMotd)
+                            .QuotePlace()
                             .EscapeCharacterReplace()
                             .ToJsonObjectString()
                             .build();
