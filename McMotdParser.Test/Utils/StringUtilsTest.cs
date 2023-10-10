@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using McMotdParser.MAUI.Extensions;
 using McMotdParser.Utils;
 
 namespace McMotdParser.Test.Utils;
@@ -19,12 +20,13 @@ public class StringUtilsTest
 
     [Theory]
     [InlineData("[1.8-1.20]\r\n")]
+    [InlineData("[1.8-1.20]\r\n    ")]
     public void TestMoreSimilarReal(string RawMotd)
     {
         //RawMotd = StringUtils.EscapeCharacterReplace(RawMotd);
         RawMotd = StringUtils.EscapeCharacterReplace(RawMotd);
 
-        string expect = "[1.8-1.20]§x§z";
+        string expect = "[1.8-1.20]§x§z    ";
         
         Assert.Equal(expect,RawMotd);
 
@@ -38,5 +40,13 @@ public class StringUtilsTest
         string expect = @"""12345""";
         
         Assert.Equal(expect,StringUtils.QuotesPlace(text));
+    }
+
+    [Fact]
+    public void ToXamlTest()
+    {
+        string text = "\r\n";
+        string expect = "§x§z";
+        Assert.Equal(expect, new MotdParser().ToXaml(text).FirstOrDefault().Text);
     }
 }

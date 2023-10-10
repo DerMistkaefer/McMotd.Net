@@ -4,7 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="McMotdParser.MAUI.McMotdView" Loaded="McMotdView_OnLoaded">
     <ContentView.Content>
-        <StackLayout x:Name="MotdFrame" Orientation="Vertical">
+        <StackLayout x:Name="MotdStackLayout" Orientation="Vertical">
         </StackLayout>
     </ContentView.Content>
 </ContentView>

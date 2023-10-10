@@ -1,7 +1,7 @@
 # McMotd.Net
 
 McMotd.Net is Minecraft Motd Parser  
-McMotd can convert motd string to html
+McMotd.Net can convert motd string to html
 
 ---
 ## how to use?
