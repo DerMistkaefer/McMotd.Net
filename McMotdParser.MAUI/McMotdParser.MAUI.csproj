@@ -22,4 +22,12 @@
 	  <ProjectReference Include="..\McMotdParser\McMotdParser.csproj" />
 	</ItemGroup>
 
+
+	<ItemGroup>
+	  <Folder Include="Platforms\Android\" />
+	  <Folder Include="Platforms\iOS\" />
+	  <Folder Include="Platforms\MacCatalyst\" />
+	  <Folder Include="Platforms\Windows\" />
+	</ItemGroup>
+
 </Project>

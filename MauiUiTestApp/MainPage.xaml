@@ -9,7 +9,7 @@
             Spacing="25"
             Padding="30,0"
             VerticalOptions="Center">
-            <motd:McMotdView RawMotdString="                §aHypixel Network §c[1.8-1.20]\r\n        §b§lDROPPER v1.0 §7- §6§lNEW ARCADE LOBBY"/>
+            <motd:McMotdView RawMotdString="                §aHypixel Network §c[1.8-1.20]\r\n        §b§lDROPPER v1.0 §7- §6§lNEW ARCADE LOBBY" FontSize="24"/>
             <Image
                 Source="dotnet_bot.png"
                 SemanticProperties.Description="Cute dot net bot waving hi to you!"
