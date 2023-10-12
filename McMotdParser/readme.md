@@ -16,7 +16,8 @@ HtmlMotd will output like
     <span style="color:#808080;">Hello&nbsp;Minecraft!!</span>
 </div>
 ```
-McMotd.Net can also resolve json and §(SectionSign)  
+McMotd.Net can also resolve json and §(SectionSign)    
+-
 using Json
 ```csharp
 string RawMotd = "{\"extra\":[{\"color\":\"#55FF55\",\"text\":\"HyPixel Network \"},{\"color\":\"#FF5555\",\"text\":\"[1.8-1.20]rn\"},{\"bold\":true,\"color\":\"#55FFFF\",\"text\":\"Test\"}],\"text\":\"\"}";
