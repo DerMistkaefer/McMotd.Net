@@ -2,7 +2,7 @@
   <PropertyGroup>
     <PackageId>McMotd.Net</PackageId>
     <Authors>NJoyShadow</Authors>
-    <PackageVersion>0.0.1</PackageVersion>
+    <PackageVersion>0.0.2</PackageVersion>
     <Copyright>Copyright (c) NJoyShadow 2023</Copyright>
     <PackageProjectUrl>https://github.com/N-Joy-Shadow/McMotd.Net</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
