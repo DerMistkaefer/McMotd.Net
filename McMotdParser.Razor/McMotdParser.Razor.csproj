@@ -4,6 +4,18 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <PackageId>McMotd.Net.Razor</PackageId>
+    <Version>0.0.1</Version>
+    <Authors>NJoyShadow</Authors>
+    <Copyright>Copyright (c) NJoyShadow 2023</Copyright>
+    <PackageProjectUrl>https://github.com/N-Joy-Shadow/McMotd.Net</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/N-Joy-Shadow/McMotd.Net/tree/stable/McMotdParser.Razor</RepositoryUrl>
+    <RepositoryType>github</RepositoryType>
+    <PackageTags>minecraft,minecraft-motd,motd,razor</PackageTags>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+
   </PropertyGroup>
 
 
@@ -21,6 +33,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\McMotdParser\McMotdParser.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\"/>
   </ItemGroup>
 
 </Project>

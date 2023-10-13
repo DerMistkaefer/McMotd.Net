@@ -5,6 +5,11 @@ McMotd.Net can convert motd string to html
 
 ---
 ## how to use?
+### setup
+import McMotdParser
+```csharp
+using McMotdParser;
+```
 basic using
 ```csharp
 string RawMotd = "Hello Minecraft!!";

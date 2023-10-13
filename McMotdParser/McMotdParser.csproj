@@ -14,6 +14,9 @@
     <Description>
       McMotd can parse Raw minecraft motd to Html as string
     </Description>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <RepositoryUrl>https://github.com/N-Joy-Shadow/McMotd.Net/tree/stable/McMotdParser</RepositoryUrl>
+    <RepositoryType>github</RepositoryType>
   </PropertyGroup>
   <ItemGroup>
     <None Include="README.md" Pack="true" PackagePath="\"/>
