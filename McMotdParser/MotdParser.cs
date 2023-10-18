@@ -14,16 +14,6 @@ namespace McMotdParser
 {
     public class MotdParser
     {
-
-        
-
-        public List<MotdContent> ToTest(string RawMotd)
-        {
-     
-            return this.deserialize(RawMotd);
-        }
-        //inconstruct
-        //TOOD: Adding Style
         public string ToHtml(string RawMotd)
         {
             var contents = this.deserialize(RawMotd);
@@ -73,7 +63,7 @@ namespace McMotdParser
         }
         public List<MotdContent> deserialize(string RawMotd)
         {
-            RawMotd = new StringUtilBuilder()
+            RawMotd = new StringUtilsBuilder()
                             .setString(RawMotd)
                             .QuotePlace()
                             .EscapeCharacterReplace()
