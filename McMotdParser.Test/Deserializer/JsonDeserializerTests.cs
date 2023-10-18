@@ -20,7 +20,7 @@ namespace McMotdParser.Test.Deserializer
             MotdContents contents= new MotdContents();
             List<MotdContent> expect = new List<MotdContent>()
             {
-                new MotdContent() { Color =  "#808080", Text = "기모찌서버", TextFormatting = { TextFormatEnum.Noraml }  }
+                new MotdContent() { Color =  "#808080", Text = "기모찌서버"  }
             };
 
             Assert.True(testResult.SequenceEqual(expect));
