@@ -50,8 +50,6 @@ namespace McMotdParser.Deserializer
                     }
                     motdContents.Add(motdContent);
                 }
-
-                //if(root.TryGetProperty("text",out var text) && text)
             }
             
 
