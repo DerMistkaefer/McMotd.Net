@@ -1,6 +1,6 @@
 namespace McMotdParser.Utils;
 
-public class StringUtilBuilder
+public class StringUtilsBuilder
 {
     private string RawMotd;
 
@@ -10,24 +10,24 @@ public class StringUtilBuilder
         return RawMotd;
     }
 
-    public StringUtilBuilder setString(string RawMotd)
+    public StringUtilsBuilder setString(string RawMotd)
     {
         this.RawMotd = RawMotd;
         return this;
     }
-    public StringUtilBuilder QuotePlace()
+    public StringUtilsBuilder QuotePlace()
     {
         this.RawMotd = StringUtils.QuotesPlace(this.RawMotd);
         return this;
     }
 
-    public StringUtilBuilder ToJsonObjectString()
+    public StringUtilsBuilder ToJsonObjectString()
     {
         this.RawMotd = StringUtils.ToJsonObjectString(this.RawMotd);
         return this;
     }
 
-    public StringUtilBuilder EscapeCharacterReplace()
+    public StringUtilsBuilder EscapeCharacterReplace()
     {
         this.RawMotd = StringUtils.EscapeCharacterReplace(this.RawMotd);
         return this;

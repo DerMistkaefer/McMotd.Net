@@ -14,6 +14,7 @@ namespace McMotdParser.Deserializer
 {
     internal class MotdDeserializer : JsonConverter<List<MotdContent>>
     {
+        private bool nextLineBreak = false;
         public override List<MotdContent>? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             if (reader.TokenType != JsonTokenType.StartObject)
@@ -23,100 +24,75 @@ namespace McMotdParser.Deserializer
                     return new SectionSignDeserializer(jsonDoc.RootElement.GetString()).deserialize();
                 }
             }
-            reader.Read();
-            string? propertyName = reader.GetString(); //this indicate first key
-
-            bool nextLinebreak = false; //this will work after one cycle 
+            List<MotdContent> motdContents = new List<MotdContent>();
             
-            List<MotdContent> contents = new List<MotdContent>();
-            while (reader.Read())
+            using (JsonDocument doc = JsonDocument.ParseValue(ref reader))
             {
-                if (reader.TokenType == JsonTokenType.EndObject) return contents;
-
-                MotdContent motd = new MotdContent();
-
-                //Execute simple json motd deserialize
-                if (propertyName == "text")
+                var root = doc.RootElement;
+                if (root.TryGetProperty("extra",out var extra))
                 {
-                    string? value = reader.GetString();
-                    if (!string.IsNullOrEmpty(value)) //temponary //this condition do filtering extra value
+                    foreach (var obj in extra.EnumerateArray())
                     {
-                        motd.Text = value;
-                        motd.TextFormatting.Add(TextFormatEnum.Noraml);
-                        //motd.LineBreak = value.EndsWith("§z§x");
-                        contents.Add(motd);
-                    }
-                    continue;
-                }
-                //Execute complex json motd deserialize
-                //TODO : simplify,this code too complex
-                if (propertyName == "extra")
-                {
-                    //Array read
-                    if (reader.TokenType == JsonTokenType.StartArray)
-                    {
-                        while (reader.TokenType != JsonTokenType.EndArray)
+                        MotdContent motdContent = new MotdContent();
+                        foreach (var item in obj.EnumerateObject())
                         {
-                            reader.Read();
-                            if(reader.TokenType == JsonTokenType.StartObject) reader.Read(); //Execute skip StartObject
-
-                            //Add MotdLine add
-                            if (reader.TokenType == JsonTokenType.EndObject)
-                            {
-                                contents.Add(motd);
-                                motd = new MotdContent(); //reset
-                                continue;
-                            }
-                            if (reader.TokenType == JsonTokenType.EndArray) {
-                                reader.Read();
-                                propertyName = reader.GetString();
-                                break;
-                            } //break, before reader.GetString()
-
-                            propertyName = reader.GetString();
-                            reader.Read();
-                            switch (propertyName)
-                            {
-                                case "color":
-                                    string color = reader.GetString() ?? "#808080";
-                                    motd.Color = color.StartsWith("#") ? color : MotdData.ColorDict[color];
-                                    break;
-                                case "bold":
-                                    if (reader.GetBoolean()) motd.TextFormatting.Add(TextFormatEnum.Bold);
-                                    break;
-                                case "italic":
-                                    if (reader.GetBoolean()) motd.TextFormatting.Add(TextFormatEnum.Italic);
-                                    break;
-                                case "text":
-                                    var value = reader.GetString();
-                                    
-                                    //this 
-                                    if (nextLinebreak)
-                                    {
-                                        motd.LineBreak = true;
-                                        nextLinebreak = false;
-                                    }
-
-                                    if (value.Contains("§z"))
-                                    {
-                                        value = value.Replace("§z", "").Replace("§x","");
-                                        nextLinebreak = true;
-                                    }
-
-                                    
-                                    motd.Text = string.IsNullOrEmpty(value) ? " " : value; //space add
-                                    break;
-                            }
+                            ParsingObject(item,ref motdContent);
                         }
+                        motdContents.Add(motdContent);
                     }
                 }
+                else
+                {
+                    MotdContent motdContent = new MotdContent();
+                    foreach (var item in root.EnumerateObject())
+                    {
+                        ParsingObject(item,ref motdContent);
+                    }
+                    motdContents.Add(motdContent);
+                }
+
+                //if(root.TryGetProperty("text",out var text) && text)
             }
-            throw new JsonException();
+            
+
+            return motdContents;
         }
 
         public override void Write(Utf8JsonWriter writer, List<MotdContent> value, JsonSerializerOptions options)
         {
             throw new NotImplementedException();
         }
+
+        private void ParsingObject(JsonProperty property,ref MotdContent motdContent)
+        {
+            var value = property.Value;
+            switch (property.Name) {
+                case "color": 
+                    string color = value.GetString() ?? "#808080"; 
+                    motdContent.Color = color.StartsWith("#") ? color : MotdData.ColorDict[color]; 
+                    break;
+                case "bold": 
+                    if (value.GetBoolean()) motdContent.TextFormatting.Add(TextFormatEnum.Bold); 
+                    break;
+                case "italic": 
+                    if (value.GetBoolean()) motdContent.TextFormatting.Add(TextFormatEnum.Italic); 
+                    break; 
+                case "text": 
+                    var text = value.GetString(); 
+                    if (nextLineBreak) 
+                    { 
+                        motdContent.LineBreak = true; 
+                        nextLineBreak = false;
+                    } 
+                    if (text.Contains("§z")) 
+                    { 
+                        text = text.Replace("§z", "").Replace("§x",""); 
+                        nextLineBreak = true;
+                    } 
+                    motdContent.Text = string.IsNullOrEmpty(text) ? " " : text;
+                    break;
+            }
+        }
+
     }
 }
