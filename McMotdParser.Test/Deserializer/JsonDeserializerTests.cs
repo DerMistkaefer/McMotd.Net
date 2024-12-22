@@ -25,6 +25,22 @@ namespace McMotdParser.Test.Deserializer
 
             Assert.True(testResult.SequenceEqual(expect));
         }
+        
+        [Fact]
+        public void NestedJsonMotdDeserialize()
+        {
+            string raw_motd = @"{""color"":""red"",""extra"":[{""color"":""green"",""text"":""World""}],""text"":""Hello ""}";
+            var testResult = new MotdParser().deserialize(raw_motd);
+            
+            List<MotdContent> expect = new List<MotdContent>()
+            {
+                new MotdContent{ Color = "#FF5555", Text = "Hello "},
+                new MotdContent{ Color = "#55FF55", Text = "World"},
+            };
+
+            Assert.True(testResult.SequenceEqual(expect));
+        }
+        
         [Fact]
         public void ComplexJsonMotdDeserialize()
         {
@@ -35,6 +51,7 @@ namespace McMotdParser.Test.Deserializer
             
             List<MotdContent> expect = new List<MotdContent>()
             {
+                new MotdContent{ Color = "#808080", Text = " "},
                 new MotdContent{ Color = "#55FFFF", Text = "◆ "},
                 new MotdContent{ Color = "#00ffff", Text = "스", TextFormatting = new HashSet<TextFormatEnum> { TextFormatEnum.Bold,TextFormatEnum.Italic } },
                 new MotdContent{ Color = "#19e5ff", Text = "티", TextFormatting = new HashSet<TextFormatEnum> { TextFormatEnum.Bold,TextFormatEnum.Italic } },

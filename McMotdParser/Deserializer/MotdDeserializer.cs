@@ -29,29 +29,15 @@ namespace McMotdParser.Deserializer
             using (JsonDocument doc = JsonDocument.ParseValue(ref reader))
             {
                 var root = doc.RootElement;
+                motdContents.Add(ParsingNode(root));
                 if (root.TryGetProperty("extra",out var extra))
                 {
                     foreach (var obj in extra.EnumerateArray())
                     {
-                        MotdContent motdContent = new MotdContent();
-                        foreach (var item in obj.EnumerateObject())
-                        {
-                            ParsingObject(item,ref motdContent);
-                        }
-                        motdContents.Add(motdContent);
+                        motdContents.Add(ParsingNode(obj));
                     }
-                }
-                else
-                {
-                    MotdContent motdContent = new MotdContent();
-                    foreach (var item in root.EnumerateObject())
-                    {
-                        ParsingObject(item,ref motdContent);
-                    }
-                    motdContents.Add(motdContent);
                 }
             }
-            
 
             return motdContents;
         }
@@ -59,6 +45,16 @@ namespace McMotdParser.Deserializer
         public override void Write(Utf8JsonWriter writer, List<MotdContent> value, JsonSerializerOptions options)
         {
             throw new NotImplementedException();
+        }
+
+        private MotdContent ParsingNode(JsonElement element)
+        {
+            MotdContent motdContent = new MotdContent();
+            foreach (var item in element.EnumerateObject())
+            {
+                ParsingObject(item, ref motdContent);
+            }
+            return motdContent;
         }
 
         private void ParsingObject(JsonProperty property,ref MotdContent motdContent)
